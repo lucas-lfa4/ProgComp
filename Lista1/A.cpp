@@ -10,21 +10,28 @@ int main() {
     cin >> n;
 
     vector<int> A(n);
-    vector<int> aux(n);
-    int cnt = 0;
 
-    for(int i=0; i < n; i++) {
+    for(int i=0; i < n; i++)
         cin >> A[i];
-    }
 
+    sort(A.begin(), A.end());
 
+    int cnt, atual;
 
     for(int i=0; i < n; i++) {
-        cout << A[i];
+        if(i==0) {
+            atual = A[0];
+            cnt = 1;
+        }
+        else {
+            if(A[i] != atual) {
+                cnt++;
+                atual = A[i];
+            }
+        }
     }
-    
-    cout << endl << A.size();
-    
+
+    cout << cnt << endl;
 
     return 0;
 }
