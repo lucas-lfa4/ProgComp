@@ -32,10 +32,14 @@ int main() {
         if(impares[0] != 0) {
             sort(impares.begin(), impares.end());
             reverse(impares.begin(), impares.end());
-            bool pula = false;
-            for(int k = 0; k < deslocamento; k++, pula = !pula)
-                if(!pula)
+            if(deslocamento%2 == 0) {
+                for(int k = 0; k < deslocamento/2; k++)
                     soma += impares[k];
+            }
+            else {
+                for(int k = 0; k < deslocamento/2 + 1; k++)
+                    soma += impares[k];
+            }
             cout << soma << "\n";
         }
         else
