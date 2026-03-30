@@ -6,17 +6,16 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int c, l, m, d, soma_pote, cnt = 0;
+    int c, l, m, d, soma, prox_valor, cnt = 0;
     cin >> c;
-    bool acabou = false;
+
     bool vez_esquerda = true;
     int cruzamentos = 0;
     vector<int> dist_carros_esquerda;
     vector<int> dist_carros_direita;
-    vector<int> pote;
     string s;
 
-    for(int i = 0; i < c; i++, acabou = false, soma_pote = 0, vez_esquerda = true, cruzamentos = 0, cnt = 0) {
+    for(int i = 0; i < c; i++, soma = 0, vez_esquerda = true, cruzamentos = 0, cnt = 0) {
         cin >> l >> m;
 
         for(int k = 0; k < m; k++) {
@@ -31,37 +30,70 @@ int main() {
         reverse(dist_carros_direita.begin(), dist_carros_direita.end());
         sort(dist_carros_esquerda.begin(), dist_carros_esquerda.end());
         reverse(dist_carros_esquerda.begin(), dist_carros_esquerda.end());
-        auto it_left = dist_carros_esquerda.begin();
-        auto it_right = dist_carros_direita.begin();
 
-        while(!acabou) {
+        /*cout << "carros esperando na margem esquerda\n";
+        for(auto it = dist_carros_esquerda.begin(); it != dist_carros_esquerda.end(); it++) {
+            cout << *it << " ";
+        }
+        cout << "\ncarros esperando na margem direita\n";
+        for(auto it = dist_carros_direita.begin(); it != dist_carros_direita.end(); it++) {
+            cout << *it << " ";
+        }
+        cout << "\n";*/
+
+        while(!(dist_carros_direita.empty() && dist_carros_esquerda.empty())) {
             if(vez_esquerda) {
-                while(it_left != dist_carros_esquerda.end() && soma_pote + *it_left < 100*l) {
-                    pote.push_back(*it_left);
-                    soma_pote += *it_left;
-                    it_left++;
+                for(auto it = dist_carros_esquerda.begin(); it != dist_carros_esquerda.end(); ) {
+                    if(soma + (*it) < 100*l) {
+                        soma += *it;
+
+                        if(it+1 != dist_carros_esquerda.end()) {
+                            prox_valor = *(it+1);
+                            dist_carros_esquerda.erase(it);
+                            it = find(dist_carros_esquerda.begin(), dist_carros_esquerda.end(), prox_valor);
+                        }
+                        else {
+                            dist_carros_esquerda.erase(it);
+                            it = dist_carros_esquerda.end();
+                        }
+                    }
+                    else
+                        it++;
                 }
-
-
-
+                
                 vez_esquerda = false;
+                cruzamentos++;
+                soma = 0;
             }
             else {
-                while(it_right != dist_carros_direita.end() && soma_pote + *it_right < 100*l) {
-                    pote.push_back(*it_right);
-                    soma_pote += *it_right;
-                    it_right++;
+                for(auto it = dist_carros_direita.begin(); it != dist_carros_direita.end(); ) {
+                    if(soma + (*it) < 100*l) {
+                        soma += *it;
+
+                        if(it+1 != dist_carros_direita.end()) {
+                            prox_valor = *(it+1);
+                            dist_carros_direita.erase(it);
+                            it = find(dist_carros_direita.begin(), dist_carros_direita.end(), prox_valor);
+                        }
+                        else {
+                            dist_carros_direita.erase(it);
+                            it = dist_carros_direita.end();
+                        }
+                    }
+                    else
+                        it++;
                 }
 
                 vez_esquerda = true;
+                cruzamentos++;
+                soma = 0;
             }
-
-            
         }
+
+        cout << cruzamentos << "\n";
 
         dist_carros_direita.clear();
         dist_carros_esquerda.clear();
-        pote.clear();
         s.clear();
     }
 
