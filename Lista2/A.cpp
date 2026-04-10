@@ -63,7 +63,7 @@ class List {
             novo->letra = it;
             qnt++;
 
-            if(head = tail)
+            if(head == tail)
                 tail = head->next;
         }
         void push_back(char it) {
@@ -83,10 +83,20 @@ class List {
                 next();
             }
         }
+        void print_invertido() {
+            string cadeia(qnt, ' ');
+            int i = 0;
+            moveToStart();
 
+            while(curr->next != NULL) {
+                cadeia[i] = curr->next->letra;
+                next();
+                i++;
+            }
+            std::reverse(cadeia.begin(), cadeia.end());
+            cout << cadeia;
+        }
 };
-
-
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -95,27 +105,46 @@ int main() {
     string S;
     int Q, T, F;
     char C;
+    bool invertida = false;
 
     cin >> S;
+    List str;
+    for(auto it = S.begin(); it != S.end(); it++)
+        str.push_back(*it);
     cin >> Q;
 
     for(int i = 0; i < Q; i++) {
         cin >> T;
 
         if(T == 1)
-            reverse(S.begin(), S.end());
+            invertida = !invertida;
         else if(T == 2) {
             cin >> F;
             cin >> C;
 
-            if(F == 1)
-                S = C + S;
-            else if(F == 2)
-                S = S + C;
+            if(F == 1) {
+                if(invertida) {
+                    str.push_back(C);
+                }
+                else {
+                    str.append(C);
+                }
+            }
+            else if(F == 2) {
+                if(invertida) {
+                    str.append(C);
+                }
+                else {
+                    str.push_back(C);
+                }
+            }
         }
     }
 
-    cout << S;
+    if(invertida) 
+        str.print_invertido();
+    else
+        str.print();
 
     return 0;
 }
