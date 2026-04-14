@@ -18,7 +18,7 @@ int main() {
             cin >> a[j];
         }
     }
-
+    
 
     return 0;
 }
