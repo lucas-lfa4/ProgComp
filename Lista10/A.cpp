@@ -52,6 +52,7 @@ int main() {
     P.push_back(P[0]);
 
     cout << area(P);
+    
 
 
     return 0;
