@@ -14,7 +14,7 @@ int main() {
     for(int i = 0; i < T; i++) {
         cin >> A >> B;
 
-        cout << A << " " << B;
+        cout << A << " " << B << "\n";
     }
 
 
