@@ -6,7 +6,8 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int t, n, soma = 0;
+    int t, n;
+    long long int soma = 0;
     cin >> t;
 
     for(int i = 0; i < t; i++, soma = 0) {
