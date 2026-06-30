@@ -28,7 +28,7 @@ class Graph {
 
         void addEdge(int u, int v, int C) {
             Edge a{ v, 0, C, (int)adj[v].size() };
-            Edge b{ u, 0, 0, (int)adj[u].size() };
+            Edge b{ u, 0, C, (int)adj[u].size() };
 
             adj[u].push_back(a);
             adj[v].push_back(b);
@@ -47,42 +47,20 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    Graph g(6);
-    g.addEdge(0, 1, 16);
-    g.addEdge(0, 2, 13);
-    g.addEdge(1, 2, 10);
-    g.addEdge(1, 3, 12);
-    g.addEdge(2, 1, 4);
-    g.addEdge(2, 4, 14);
-    g.addEdge(3, 2, 9);
-    g.addEdge(3, 5, 20);
-    g.addEdge(4, 3, 7);
-    g.addEdge(4, 5, 4);
+    int n, m, a, b;
+    cin >> n >> m;
 
-    // next exmp
-    /*g.addEdge(0, 1, 3 );
-      g.addEdge(0, 2, 7 ) ;
-      g.addEdge(1, 3, 9);
-      g.addEdge(1, 4, 9 );
-      g.addEdge(2, 1, 9 );
-      g.addEdge(2, 4, 9);
-      g.addEdge(2, 5, 4);
-      g.addEdge(3, 5, 3);
-      g.addEdge(4, 5, 7 );
-      g.addEdge(0, 4, 10);
+    Graph grafo(n);
 
-     // next exp
-     g.addEdge(0, 1, 10);
-     g.addEdge(0, 2, 10);
-     g.addEdge(1, 3, 4 );
-     g.addEdge(1, 4, 8 );
-     g.addEdge(1, 2, 2 );
-     g.addEdge(2, 4, 9 );
-     g.addEdge(3, 5, 10 );
-     g.addEdge(4, 3, 6 );
-     g.addEdge(4, 5, 10 ); */
+    for(int i = 0; i < m; i++) {
+        cin >> a >> b;
 
-    cout << "Maximum flow " << g.DinicMaxFlow(0, 5) << "\n";
+        grafo.addEdge(a-1, b-1, 1);
+    }
+
+    cout << grafo.DinicMaxFlow(0, n-1) << "\n";
+    grafo.printMinCutEdges(0);
+
 
     return 0;
 }
@@ -180,7 +158,6 @@ void Graph::printMinCutEdges(int s) {
     // Roda a DFS a partir da origem
     dfsMinCut(s, visited);
 
-    cout << "\nArestas para cortar (Min-Cut):" << endl;
     // Verifica todas as arestas de todos os vértices
     for (int i = 0; i < V; i++) {
         for (int j = 0; j < adj[i].size(); j++) {
@@ -190,7 +167,7 @@ void Graph::printMinCutEdges(int s) {
             // o vértice de destino NÃO foi visitado, 
             // e é uma aresta original (C > 0)
             if (visited[i] && !visited[e.V] && e.C > 0) {
-                cout << i << " - " << e.V << "\n";
+                cout << i+1 << " " << e.V+1 << "\n";
             }
         }
     }
