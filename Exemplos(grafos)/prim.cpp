@@ -34,7 +34,7 @@ int main() {
 
     taken.assign(V, 0);
     process(0);
-    int mst_cost, num_taken = 0;
+    int mst_cost = 0, num_taken = 0;
 
     while(!pq.empty() && num_taken != V-1) {
         auto [w, u] = pq.top();

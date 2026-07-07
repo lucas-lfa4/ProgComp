@@ -32,8 +32,13 @@ class UnionFind {
 
             parent[irep] = jrep;
 
-            if(irep != jrep)
-                tamanho[jrep] += tamanho[irep];
+            if(irep != jrep) {
+                if(tamanho[irep] < tamanho[jrep])
+                    swap(irep, jrep);
+                
+                tamanho[irep] += tamanho[jrep];
+                parent[jrep] = irep;
+            }
         }
 
         bool mesmoGrupo(int i, int j) {
@@ -49,7 +54,7 @@ int main() {
     cin.tie(nullptr);
 
     int V, E;
-    cin >> E >> V;
+    cin >> V >> E;
 
     vector<iii> EL(E);
     for (int i = 0; i < E; ++i) {
